@@ -4,7 +4,13 @@ public class Task {
     private String nameTitle;
     private String description;
     private int id;
-    private String status;
+    private TaskStatus status;
+
+    public Task(String nameTitle, String description, TaskStatus status) {
+        this.nameTitle = nameTitle;
+        this.description = description;
+        this.status = status;
+    }
 
     public Task(String nameTitle, String description) {
         this.nameTitle = nameTitle;
@@ -35,21 +41,21 @@ public class Task {
         this.id = id;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "nameTitle='" + nameTitle + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status='" + status + '\'' +
+                "nameTitle = " + nameTitle +
+                ", description = " + description +
+                ", id = " + id +
+                ", status = " + status +
                 '}';
     }
 }

@@ -1,10 +1,10 @@
 package tasks;
 
-public class Subtask extends Epic {
+public class Subtask extends Task {
     private int epicId;
 
-    public Subtask(String nameTitle, String description, int epicId) {
-        super(nameTitle, description);
+    public Subtask(String nameTitle, String description, TaskStatus status, int epicId) {
+        super(nameTitle, description, status);
         this.epicId = epicId;
     }
 
@@ -14,5 +14,16 @@ public class Subtask extends Epic {
 
     public void setEpicId(int epicId) {
         this.epicId = epicId;
+    }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "epicId = " + epicId +
+                ", nameTile = " + getNameTitle() +
+                ", description = " + getDescription() +
+                ", id = " + getId() +
+                ", status = " +  getStatus() +
+                '}';
     }
 }
