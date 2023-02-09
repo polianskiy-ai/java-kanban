@@ -7,6 +7,7 @@ import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -36,7 +37,9 @@ public class TaskManager {
     }
 
     public void deleteAllSubtasks() {
-        subtasks.clear();
+        for (Integer id : subtasks.keySet()) {
+            deleteSubtaskById(id);
+        }
     }
 
     public Task getTaskById(Integer id) {
@@ -70,27 +73,23 @@ public class TaskManager {
         Integer id = ++newId;
         subtask.setId(id);
         subtask.setEpicId(epic.getId());
-        ArrayList<Integer> subtaskID;
-        subtaskID = epic.listId();
+        ArrayList<Integer> subtaskID = epic.listId();
         subtaskID.add(subtask.getId());
         epic.setSubtasksId(subtaskID);
         subtasks.put(id, subtask);
         changeEpicStatus(epic);
     }
 
-    public void updateTask(Integer id, Task newTask) {
-        newTask.setId(id);
-        tasks.put(id, newTask);
+    public void updateTask(Task newTask) {
+        tasks.put(newTask.getId(), newTask);
     }
 
-    public void updateEpic(Integer id, Epic newEpic) {
-        newEpic.setId(id);
-        epics.put(id, newEpic);
+    public void updateEpic(Epic newEpic) {
+        epics.put(newEpic.getId(), newEpic);
     }
 
-    public void updateSubtask(Integer id, Subtask newSubtask) {
-        newSubtask.setId(id);
-        subtasks.put(id, newSubtask);
+    public void updateSubtask(Subtask newSubtask) {
+        subtasks.put(newSubtask.getId(), newSubtask);
         changeEpicStatus(epics.get(newSubtask.getEpicId()));
     }
 
@@ -115,12 +114,12 @@ public class TaskManager {
 
 
     public String getListSubtaskByEpic(Epic epic) {
-        String i = "";
+        List<Subtask> i = new ArrayList<>();
         ArrayList<Integer> listSubtask = epic.listId();
         for (Integer list : listSubtask) {
-            i += subtasks.get(list);
+            i.add( subtasks.get(list));
         }
-        return i;
+        return i.toString();
     }
 
 

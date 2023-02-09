@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
-        Task task1 = new Task("Задача 1", "Описание 1", TaskStatus.NEW);
-        Task task2 = new Task("Задача 2", "Описание 2", TaskStatus.NEW);
+        Task task1 = new Task("Задача 1", "Описание 1");
+        Task task2 = new Task("Задача 2", "Описание 2");
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
         Subtask subtask1 = new Subtask("Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE);
         Subtask subtask2 = new Subtask("Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS);
@@ -37,7 +37,7 @@ public class Main {
 
         // третья проверка, меняем статус и обновляем:
         System.out.println("3");
-        taskManager.updateTask(2, new Task("Задача 2 обновленная", "обновление", TaskStatus.IN_PROGRESS));
+        taskManager.updateTask(new Task(task1.getId(), "Обновление задачи", "Обновление"));
         System.out.println(taskManager.getTasks());
         System.out.println("");
 

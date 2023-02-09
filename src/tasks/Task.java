@@ -4,7 +4,7 @@ public class Task {
     private String nameTitle;
     private String description;
     private int id;
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.NEW;
 
     public Task(String nameTitle, String description, TaskStatus status) {
         this.nameTitle = nameTitle;
@@ -13,6 +13,12 @@ public class Task {
     }
 
     public Task(String nameTitle, String description) {
+        this.nameTitle = nameTitle;
+        this.description = description;
+    }
+
+    public Task(int id, String nameTitle, String description) {
+        this.id = id;
         this.nameTitle = nameTitle;
         this.description = description;
     }
