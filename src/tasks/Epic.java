@@ -3,22 +3,22 @@ package tasks;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtaskId = new ArrayList<>();
+    protected ArrayList<Integer> subtasksId = new ArrayList<>();
 
     public Epic(String nameTitle, String description) {
         super(nameTitle, description);
     }
 
-    public ArrayList<Integer> getSubtaskId() {
-        return subtaskId;
+    public ArrayList<Integer> getSubtasksId() {
+        return subtasksId;
     }
 
-    public void setSubtaskId(ArrayList<Integer> subtaskId) {
-        this.subtaskId = subtaskId;
+    public void setSubtasksId(ArrayList<Integer> subtasksId) {
+        this.subtasksId = subtasksId;
     }
 
     public ArrayList<Integer> listId(){
-        return subtaskId;
+        return subtasksId;
     }
 
     @Override
@@ -28,6 +28,6 @@ public class Epic extends Task {
                 ", description = " + getDescription() +
                 ", id = " + getId() +
                 ", status = " +  getStatus() +
-                "}";
+                "}" + "\n";
     }
 }
