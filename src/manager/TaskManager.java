@@ -114,13 +114,13 @@ public class TaskManager {
     }
 
 
-    public String getListSubtaskByEpic(Epic epic) {
-        List<Subtask> i = new ArrayList<>();
+    public List<Subtask> getListSubtaskByEpic(Epic epic) {
+        List<Subtask> epicSubtasks = new ArrayList<>();
         ArrayList<Integer> listSubtask = epic.listId();
         for (Integer list : listSubtask) {
-            i.add( subtasks.get(list));
+            epicSubtasks.add( subtasks.get(list));
         }
-        return i.toString();
+        return epicSubtasks; //тормознул, повелся на поводу подсказок IDEA =)
     }
 
 
