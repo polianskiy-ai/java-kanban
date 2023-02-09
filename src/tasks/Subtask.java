@@ -22,7 +22,7 @@ public class Subtask extends Task {
                 ", nameTile = " + getNameTitle() +
                 ", description = " + getDescription() +
                 ", id = " + getId() +
-                ", status = " +  getStatus() +
+                ", status = " + getStatus() +
                 '}' + "\n";
     }
 }

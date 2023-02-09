@@ -17,7 +17,7 @@ public class Epic extends Task {
         this.subtasksId = subtasksId;
     }
 
-    public ArrayList<Integer> listId(){
+    public ArrayList<Integer> listId() {
         return subtasksId;
     }
 
@@ -27,7 +27,7 @@ public class Epic extends Task {
                 "nameTitle = " + getNameTitle() +
                 ", description = " + getDescription() +
                 ", id = " + getId() +
-                ", status = " +  getStatus() +
+                ", status = " + getStatus() +
                 "}" + "\n";
     }
 }

@@ -91,6 +91,7 @@ public class TaskManager {
     public void updateSubtask(Integer id, Subtask newSubtask) {
         newSubtask.setId(id);
         subtasks.put(id, newSubtask);
+        changeEpicStatus(epics.get(newSubtask.getEpicId()));
     }
 
     public void deleteTaskById(Integer id) {
@@ -102,13 +103,14 @@ public class TaskManager {
             subtasks.remove(epics.get(id).getSubtasksId().get(i));
         }
         epics.remove(id);
-       // changeEpicStatus(subtasks.get(id).getEpicId());
     }
 
     public void deleteSubtaskById(Integer id) {
         int index = epics.get(subtasks.get(id).getEpicId()).getSubtasksId().indexOf(id);
         epics.get(subtasks.get(id).getEpicId()).getSubtasksId().remove(index);
+        int epicId = subtasks.get(id).getEpicId();
         subtasks.remove(id);
+        changeEpicStatus(epics.get(epicId));
     }
 
 
