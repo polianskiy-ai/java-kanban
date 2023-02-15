@@ -8,7 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
         TaskManager taskManager = new InMemoryTaskManager();
-        HistoryManager historyManager = new InMemoryHistoryManager();
         Task task1 = new Task("Задача 1", "Описание 1");
         Task task2 = new Task("Задача 2", "Описание 2");
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
@@ -31,13 +30,14 @@ public class Main {
 
         // распечатываем по идентификатору:
         System.out.println("2.1 - распечатываем по идентификатору: ");
-        System.out.println(taskManager.getTaskById(1));
+        System.out.println(taskManager.getTasks());
         System.out.println(taskManager.getTaskById(2));
+        System.out.println(taskManager.getTaskById(1));
         System.out.println(taskManager.getEpicById(3));
         System.out.println(taskManager.getEpicById(6));
         System.out.println(taskManager.getEpicById(3));
         System.out.println(taskManager.getListSubtaskByEpic(epic1));
-        System.out.println("История просмотров - " + Manager.getDefaultHistory().getHistory());
+        System.out.println("История просмотров - " + taskManager.getHistory());
         System.out.println("");
     }
 

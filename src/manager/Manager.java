@@ -1,14 +1,12 @@
 package manager;
 
 public class Manager {
-    static InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-    static InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
     static TaskManager getDefault() {
-        return inMemoryTaskManager;
+        return new InMemoryTaskManager();
     }
 
     public static HistoryManager getDefaultHistory() {
-        return inMemoryHistoryManager;
+        return new InMemoryHistoryManager();
     }
 }
