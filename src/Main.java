@@ -39,8 +39,6 @@ public class Main {
         System.out.println(taskManager.getListSubtaskByEpic(epic1));
         System.out.println("История просмотров - " + taskManager.getHistory());
         System.out.println("");
-        test
-
     }
 
 
