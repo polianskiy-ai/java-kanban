@@ -16,17 +16,34 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        Node tailNode = tail;
-        Node newNode = new Node(task);
-        tail = newNode;
-        if (tailNode == null) {
-            head = newNode;
-        } else {
-            tailNode.next = newNode;
+        Node node = new Node(task);
+        Node existingNode = history.get(task.getId());
+        if (existingNode != null) {
+            Node prev = existingNode.prev;
+            Node next = existingNode.next;
+            if (prev != null) {
+                prev.next = next;
+            } else {
+                head = next;
+            }
+            if (next != null) {
+                next.prev = prev;
+            } else {
+                tail = prev;
+            }
+            size--;
         }
+        if (size == 0) {
+            head = node;
+        } else {
+            tail.next = node;
+            node.prev = tail;
+        }
+        tail = node;
         size++;
-        history.put(task.getId(), tail);
+        history.put(task.getId(), node);
     }
+
 
 
     @Override
