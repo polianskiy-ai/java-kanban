@@ -10,11 +10,11 @@ public class Main {
         TaskManager taskManager = new InMemoryTaskManager();
         Task task1 = new Task("Задача 1", "Описание 1");
         Task task2 = new Task("Задача 2", "Описание 2");
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1, с тремя подзадачами");
         Subtask subtask1 = new Subtask("Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE);
         Subtask subtask2 = new Subtask("Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS);
         Subtask subtask3 = new Subtask("Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS);
-        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
+        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2, без подзадач");
         //создаем задачи:
         taskManager.addTask(task1);
         taskManager.addTask(task2);
@@ -25,35 +25,37 @@ public class Main {
         taskManager.addEpic(epic2);
 
         //распечатываем:
-        System.out.println("История просмотров - " + Manager.getDefaultHistory().getHistory());
+        System.out.println("История просмотров 1 - " + Manager.getDefaultHistory().getHistory());
 
         // запрос задач:
         System.out.println("вызов задач");
-        taskManager.getTaskById(2);
-        taskManager.getTaskById(1);
-        taskManager.getEpicById(7);
-        taskManager.getEpicById(3);
-        taskManager.getSubtaskById(5);
-        taskManager.getSubtaskById(4);
-        taskManager.getSubtaskById(6);
-
-        System.out.println("История просмотров - " + taskManager.getHistory());
-
-        taskManager.getSubtaskById(5);
-        taskManager.getSubtaskById(4);
-        taskManager.getSubtaskById(6);
         taskManager.getTaskById(1);
         taskManager.getTaskById(2);
         taskManager.getEpicById(3);
+        taskManager.getSubtaskById(4);
+        taskManager.getSubtaskById(5);
+        taskManager.getSubtaskById(6);
         taskManager.getEpicById(7);
 
-        System.out.println("История просмотров - " + taskManager.getHistory());
+        System.out.println("История просмотров 2 - " + taskManager.getHistory());
+
+        taskManager.getEpicById(7);
+        taskManager.getSubtaskById(6);
+        taskManager.getSubtaskById(5);
+        taskManager.getSubtaskById(4);
+        taskManager.getEpicById(3);
+        taskManager.getTaskById(2);
+        taskManager.getTaskById(1);
+
+        System.out.println("История просмотров 3 - " + taskManager.getHistory());
 
         taskManager.deleteTaskById(1);
 
-        System.out.println("История просмотров - " + taskManager.getHistory());
+        System.out.println("История просмотров 4 - " + taskManager.getHistory());
 
         taskManager.deleteEpicById(3);
+
+        System.out.println("История просмотров 5 - " + taskManager.getHistory());
     }
 
 

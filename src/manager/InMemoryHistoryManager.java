@@ -16,13 +16,13 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        final Node l = tail; // Новый элемент станет хвостом
-        final Node newNode = new Node(task);
+        Node tailNode = tail;
+        Node newNode = new Node(task);
         tail = newNode;
-        if (l == null) {
+        if (tailNode == null) {
             head = newNode;
         } else {
-            l.next = newNode;
+            tailNode.next = newNode;
         }
         size++;
         history.put(task.getId(), tail);
@@ -53,7 +53,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        List<Task> tasks = new ArrayList<>(); //Создаем список задач
+        List<Task> tasks = new ArrayList<>();
         Node newNode = head;
         while (newNode != null) {
             tasks.add(newNode.task);
