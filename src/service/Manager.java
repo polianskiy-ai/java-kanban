@@ -1,8 +1,11 @@
-package manager;
+package service;
 
 public class Manager {
 
-    static TaskManager getDefault() {
+    private Manager() {
+    }
+
+    public static TaskManager getDefault() {
         return new InMemoryTaskManager();
     }
 

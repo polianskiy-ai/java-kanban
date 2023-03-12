@@ -1,24 +1,21 @@
-package tasks;
+package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-    protected ArrayList<Integer> subtasksId = new ArrayList<>();
+    private List<Integer> subtasksId = new ArrayList<>();
 
     public Epic(String nameTitle, String description) {
         super(nameTitle, description);
     }
 
-    public ArrayList<Integer> getSubtasksId() {
+    public List<Integer> getSubtasksId() {
         return subtasksId;
     }
 
-    public void setSubtasksId(ArrayList<Integer> subtasksId) {
-        this.subtasksId = subtasksId;
-    }
-
-    public ArrayList<Integer> listId() {
-        return subtasksId;
+    public void setSubtasksId(int subtasksId) {
+        this.subtasksId.add(subtasksId);
     }
 
     @Override

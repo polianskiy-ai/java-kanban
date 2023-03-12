@@ -1,47 +1,45 @@
-package manager;
-import tasks.Task;
+package service;
+import model.Task;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-
+import java.util.*;
 
 
 public class InMemoryHistoryManager implements HistoryManager {
-    public Node head;
-    public Node tail;
-    public int size;
+    private Node head;
+    private Node tail;
+    private int size;
     private Map<Integer, Node> history = new HashMap<>();
 
     @Override
     public void add(Task task) {
-        Node node = new Node(task);
-        Node existingNode = history.get(task.getId());
-        if (existingNode != null) {
-            Node prev = existingNode.prev;
-            Node next = existingNode.next;
-            if (prev != null) {
-                prev.next = next;
-            } else {
-                head = next;
+        if (task != null) {
+            Node node = new Node(task);
+            Node existingNode = history.get(task.getId());
+            if (existingNode != null) {
+                Node prev = existingNode.prev;
+                Node next = existingNode.next;
+                if (prev != null) {
+                    prev.next = next;
+                } else {
+                    head = next;
+                }
+                if (next != null) {
+                    next.prev = prev;
+                } else {
+                    tail = prev;
+                }
+                size--;
             }
-            if (next != null) {
-                next.prev = prev;
+            if (size == 0) {
+                head = node;
             } else {
-                tail = prev;
+                tail.next = node;
+                node.prev = tail;
             }
-            size--;
+            tail = node;
+            size++;
+            history.put(task.getId(), node);
         }
-        if (size == 0) {
-            head = node;
-        } else {
-            tail.next = node;
-            node.prev = tail;
-        }
-        tail = node;
-        size++;
-        history.put(task.getId(), node);
     }
 
 
@@ -70,7 +68,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = new LinkedList<>();
         Node newNode = head;
         while (newNode != null) {
             tasks.add(newNode.task);
@@ -80,7 +78,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
 
-    class Node {
+    private static class Node {
         Task task;
         Node prev;
         Node next;
