@@ -25,7 +25,7 @@ public class Main {
         manager.addEpic(epic2);
 
         //распечатываем:
-        System.out.println("История просмотров 1 - " + Manager.getDefaultHistory().getHistory());
+        System.out.println("История просмотров 1 - " + manager.getHistory());
 
 
         // запрос задач:
