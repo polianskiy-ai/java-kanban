@@ -8,15 +8,24 @@ import java.util.List;
 public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
     private final String fileName;
 
-    public FileBackedTasksManager(String fileName) {
+    public FileBackedTasksManager(String fileName) throws IOException {
         this.fileName = fileName;
+       load();
     }
 
     public void load() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            Task task = fromString(line);
+        FileReader reader = new FileReader(this.fileName);
+        BufferedReader br = new BufferedReader(reader);
+        String line = "";
+
+        while (br.ready()) {
+            line =  line + br.readLine()+"\n";
+        }
+        br.close();
+
+        String[] lines = line.split("\r?\n");
+        for (int i = 1; i < lines.length - 2; i++) {
+            Task task = fromString(lines[i]);
             if (task.getType() == TaskType.TASK) {
                 addTask(task);
             } else if (task.getType() == TaskType.EPIC) {
@@ -25,8 +34,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 addSubtask((Subtask) task);
             }
         }
-        reader.close();
+
+        for (String historyLine : lines[lines.length - 1].split("")) {
+            String[] historyId = historyLine.split(",");
+            for (String id : historyId) {
+                if (tasks.containsKey(Integer.parseInt(id))) {
+                    getTaskById(Integer.parseInt(id));
+                } else if (epics.containsKey(Integer.parseInt(id))) {
+                    getEpicById(Integer.parseInt(id));
+                } else if (subtasks.containsKey(Integer.parseInt(id))) {
+                    getSubtaskById(Integer.parseInt(id));
+                }
+            }
+        }
     }
+
 
     public void save() {
         try {
@@ -86,7 +108,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         FileBackedTasksManager manager = new FileBackedTasksManager("src/resources/TaskHistory.csv");
         Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1", TaskStatus.NEW);
         Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2", TaskStatus.NEW);
@@ -114,7 +136,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         System.out.println("История просмотров 2 - " + manager.getHistory());
     }
 
-
+/*
     @Override
     public List<Task> getTasks() {
         return super.getTasks();
@@ -215,5 +237,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
     public void deleteSubtaskById(Integer id) {
         super.deleteSubtaskById(id);
         save();
-    }
+    }*/
 }
