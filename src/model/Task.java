@@ -5,14 +5,17 @@ public class Task {
     private String description;
     private int id;
     private TaskStatus status = TaskStatus.NEW;
+    private TaskType type;
 
-    public Task(String nameTitle, String description, TaskStatus status) {
+    public Task(TaskType type, String nameTitle, String description, TaskStatus status) {
+        this.type = type;
         this.nameTitle = nameTitle;
         this.description = description;
         this.status = status;
     }
 
-    public Task(String nameTitle, String description) {
+    public Task(TaskType type,String nameTitle, String description) {
+        this.type = type;
         this.nameTitle = nameTitle;
         this.description = description;
     }
@@ -21,6 +24,10 @@ public class Task {
         this.id = id;
         this.nameTitle = nameTitle;
         this.description = description;
+    }
+
+    public TaskType getType() {
+        return type;
     }
 
     public String getNameTitle() {

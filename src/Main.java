@@ -1,19 +1,16 @@
+import model.*;
 import service.*;
-import model.Epic;
-import model.Subtask;
-import model.Task;
-import model.TaskStatus;
 
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = Manager.getDefault();
+        /*TaskManager manager = Manager.getDefault();
         Task task1 = new Task("Задача 1", "Описание 1");
         Task task2 = new Task("Задача 2", "Описание 2");
         Epic epic1 = new Epic("Эпик 1", "Описание эпика 1, с тремя подзадачами");
-        Subtask subtask1 = new Subtask("Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3);
-        Subtask subtask2 = new Subtask("Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
-        Subtask subtask3 = new Subtask("Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
+        Subtask subtask1 = new Subtask( TaskType.SUBTASK,"Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3);
+        Subtask subtask2 = new Subtask(TaskType.SUBTASK,"Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
+        Subtask subtask3 = new Subtask(TaskType.SUBTASK,"Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
         Epic epic2 = new Epic("Эпик 2", "Описание эпика 2, без подзадач");
         //создаем задачи:
         manager. addTask(task1);
@@ -56,7 +53,7 @@ public class Main {
 
         manager.deleteEpicById(3);
 
-        System.out.println("История просмотров 5 - " + manager.getHistory());
+        System.out.println("История просмотров 5 - " + manager.getHistory());*/
     }
 
 
