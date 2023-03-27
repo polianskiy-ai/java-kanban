@@ -10,7 +10,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
     public FileBackedTasksManager(HistoryManager historyManager) throws IOException {
         super(historyManager);
-        fileName = "src/resources/TaskHistory.csv";
+        fileName="src/resources/TaskHistory.csv";
         load();
     }
 
@@ -20,7 +20,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         String line = "";
 
         while (br.ready()) {
-            line = line + br.readLine() + "\n";
+            line =  line + br.readLine()+"\n";
         }
         br.close();
 
@@ -70,7 +70,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             for (Subtask subtask : getSubtasks()) {
                 line = line + toString(subtask) + "\n";
             }
+
             history = history + historyToString(historyManager);
+
             line = line + "\n" + history;
             writer.write(line);
             writer.close();
@@ -79,10 +81,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
-    public static String historyToString(HistoryManager manager) {
-        String historyId = "";
+    public static String historyToString(HistoryManager manager){
+        String historyId="";
         for (Task task : manager.getNodes()) {
-            historyId += task.getId() + ",";
+            historyId+=task.getId()+",";
         }
         return historyId;
     }
@@ -122,6 +124,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
     public static void main(String[] args) throws IOException {
         FileBackedTasksManager manager = new FileBackedTasksManager(Manager.getDefaultHistory());
+        Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1");
+        Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2");
+        Epic epic1 = new Epic(TaskType.EPIC, "Эпик 1", "Описание эпика 1");
+        Subtask subtask1 = new Subtask( TaskType.SUBTASK,"Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3);
+        Subtask subtask2 = new Subtask(TaskType.SUBTASK,"Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
+        Subtask subtask3 = new Subtask(TaskType.SUBTASK,"Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
+        Epic epic2 = new Epic(TaskType.EPIC, "Эпик 2", "Описание эпика 2");
+        manager. addTask(task1);
+        manager.addTask(task2);
+        manager.addEpic(epic1);
+        manager.addSubtask(subtask1);
+        manager.addSubtask(subtask2);
+        manager.addSubtask(subtask3);
+        manager.addEpic(epic2);
+
+
         System.out.println(manager.getTasks());
         System.out.println(manager.getEpics());
         System.out.println(manager.getSubtasks());

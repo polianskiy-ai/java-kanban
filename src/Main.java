@@ -4,7 +4,7 @@ import service.*;
 public class Main {
 
     public static void main(String[] args) {
-        /*TaskManager manager = Manager.getDefault();
+        TaskManager manager = Manager.getDefault();
         Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1");
         Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2");
         Epic epic1 = new Epic(TaskType.EPIC, "Эпик 1", "Описание эпика 1, с тремя подзадачами");
@@ -55,7 +55,7 @@ public class Main {
 
         System.out.println("История просмотров 5 - " + manager.getHistory());
 
-         */
+
     }
 
 
