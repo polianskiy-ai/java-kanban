@@ -3,13 +3,11 @@ package service;
 import model.*;
 
 import java.io.*;
-import java.util.List;
 
-public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
+public class FileBackedTasksManager extends InMemoryTaskManager {
     private final String fileName;
 
     public FileBackedTasksManager(HistoryManager historyManager) throws IOException {
-        super(historyManager);
         fileName="src/resources/TaskHistory.csv";
         load();
     }
@@ -83,7 +81,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
 
     public static String historyToString(HistoryManager manager){
         String historyId="";
-        for (Task task : manager.getNodes()) {
+        for (Task task : manager.getHistory()) {
             historyId+=task.getId()+",";
         }
         return historyId;
@@ -122,7 +120,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException { //так main тут по условию ТЗ
         FileBackedTasksManager manager = new FileBackedTasksManager(Manager.getDefaultHistory());
         Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1");
         Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2");
