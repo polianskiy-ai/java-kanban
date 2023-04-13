@@ -3,6 +3,7 @@ package service;
 import model.*;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final String fileName;
@@ -110,39 +111,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         String name = values[2];
         TaskStatus status = TaskStatus.valueOf(values[3]);
         String description = values[4];
+        int duration = Integer.parseInt(values[5]);
+        LocalDateTime startTime = LocalDateTime.parse(values[6]);
         if (type == TaskType.TASK) {
-            return new Task(type, name, description, status);
+            return new Task(type, name, description, status, duration, startTime);
         } else if (type == TaskType.EPIC) {
             return new Epic(type, name, description);
         } else {
             int epicId = Integer.parseInt(values[5]);
-            return new Subtask(type, name, description, status, epicId);
+            return new Subtask(type, name, description, status, epicId, duration, startTime);
         }
-    }
-
-    public static void main(String[] args) throws IOException { //так main тут по условию ТЗ
-        FileBackedTasksManager manager = new FileBackedTasksManager(Manager.getDefaultHistory());
-        Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1");
-        Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2");
-        Epic epic1 = new Epic(TaskType.EPIC, "Эпик 1", "Описание эпика 1");
-        Subtask subtask1 = new Subtask( TaskType.SUBTASK,"Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3);
-        Subtask subtask2 = new Subtask(TaskType.SUBTASK,"Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
-        Subtask subtask3 = new Subtask(TaskType.SUBTASK,"Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
-        Epic epic2 = new Epic(TaskType.EPIC, "Эпик 2", "Описание эпика 2");
-        manager. addTask(task1);
-        manager.addTask(task2);
-        manager.addEpic(epic1);
-        manager.addSubtask(subtask1);
-        manager.addSubtask(subtask2);
-        manager.addSubtask(subtask3);
-        manager.addEpic(epic2);
-
-
-        System.out.println(manager.getTasks());
-        System.out.println(manager.getEpics());
-        System.out.println(manager.getSubtasks());
-        System.out.println("------");
-        System.out.println(manager.getHistory());
     }
 
     @Override

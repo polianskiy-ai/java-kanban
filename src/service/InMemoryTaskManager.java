@@ -5,10 +5,8 @@ import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -16,6 +14,17 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Epic> epics = new HashMap<>();
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     protected final HistoryManager historyManager = Manager.getDefaultHistory();
+    private final Comparator<Task> comparator = (o1, o2) -> {
+        if (o1.equals(o2)) {
+            return 0;
+        } else if (o1.getStartTime() == null) {
+            return 1;
+        } else if (o2.getStartTime() == null) {
+            return -1;
+        } else return o1.getStartTime().compareTo(o2.getStartTime());
+    };
+
+    protected Set<Task> priorityTasks = new TreeSet<>(comparator);
 
     private int newId = 0;
 
@@ -61,7 +70,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubtasks() {
-        for (Epic epic : epics.values()){
+        for (Epic epic : epics.values()) {
             epic.deleteSubtasks();
             changeEpicStatus(epic);
         }
@@ -156,6 +165,7 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
         changeEpicStatus(epic);
     }
+
     @Override
     public List<Subtask> getListSubtaskByEpic(int id) {
         if (epics.containsKey(id)) {
@@ -171,7 +181,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-    private void changeEpicStatus(Epic epic) { // private сделать не получается
+    private void changeEpicStatus(Epic epic) {
         int doneStatus = 0;
         int newStatus = 0;
         for (Integer id : epic.getSubtasksId()) {
@@ -191,6 +201,27 @@ public class InMemoryTaskManager implements TaskManager {
             epic.setStatus(TaskStatus.NEW);
         } else {
             epic.setStatus(TaskStatus.IN_PROGRESS);
+        }
+    }
+
+    private void epicTime(Epic epic) {
+        List<Subtask> subtasks = getListSubtaskByEpic(epic.getId());
+        if (!subtasks.isEmpty()) {
+            LocalDateTime startTime = subtasks.get(0).getStartTime();
+            if (startTime != null) {
+                int duration = 0;
+                for (Subtask subtask : subtasks) {
+                    if (subtask.getStartTime() != null) {
+                        duration += subtask.getDuration();
+                        if (subtask.getStartTime().isBefore(startTime)) {
+                            startTime = subtask.getStartTime();
+                        }
+                    }
+                }
+                epic.setStartTime(startTime);
+                epic.setDuration(duration);
+                epic.setEndTime(startTime.plusMinutes(duration));
+            }
         }
     }
 }

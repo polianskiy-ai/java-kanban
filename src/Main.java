@@ -1,16 +1,18 @@
 import model.*;
 import service.*;
 
+import java.time.LocalDateTime;
+
 public class Main {
 
     public static void main(String[] args) {
         TaskManager manager = Manager.getDefault();
-        Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1");
-        Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2");
+        Task task1 = new Task(TaskType.TASK, "Задача 1", "Описание 1", 3, LocalDateTime.now());
+        Task task2 = new Task(TaskType.TASK, "Задача 2", "Описание 2", 4, LocalDateTime.now());
         Epic epic1 = new Epic(TaskType.EPIC, "Эпик 1", "Описание эпика 1, с тремя подзадачами");
-        Subtask subtask1 = new Subtask( TaskType.SUBTASK,"Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3);
-        Subtask subtask2 = new Subtask(TaskType.SUBTASK,"Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
-        Subtask subtask3 = new Subtask(TaskType.SUBTASK,"Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3);
+        Subtask subtask1 = new Subtask( TaskType.SUBTASK,"Подзадача 1", "Подзадача у эпика - 1", TaskStatus.DONE, 3, 3, LocalDateTime.now());
+        Subtask subtask2 = new Subtask(TaskType.SUBTASK,"Подзадача 2", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3, 3, LocalDateTime.now());
+        Subtask subtask3 = new Subtask(TaskType.SUBTASK,"Подзадача 3", "Подзадача у эпика - 1", TaskStatus.IN_PROGRESS, 3, 3, LocalDateTime.now());
         Epic epic2 = new Epic(TaskType.EPIC, "Эпик 2", "Описание эпика 2, без подзадач");
         //создаем задачи:
         manager. addTask(task1);
