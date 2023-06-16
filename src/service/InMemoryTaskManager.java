@@ -103,6 +103,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
+        if (task == null) {
+            throw new NullPointerException("Task can't be null");
+        }
         int id = ++newId;
         task.setId(id);
         tasks.put(id, task);
@@ -111,6 +114,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addEpic(Epic epic) {
+        if (epic == null) {
+            throw new NullPointerException("Epic can't be null");
+        }
         int id = ++newId;
         epic.setId(id);
         epics.put(id, epic);
@@ -118,30 +124,34 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addSubtask(Subtask subtask) {
-        int id = ++newId;
-        subtask.setId(id);
-        subtasks.put(id, subtask);
-        addTaskToPrioritizedTasks(subtask);
-        Epic epic = epics.get(subtask.getEpicId());
-        epic.addSubtasksId(id);
-        changeEpicStatus(epic);
-        changeEpicTime(epic);
+        if (subtask == null) {
+            throw new NullPointerException("Subtask can't be null");
+        } else {
+            int id = ++newId;
+            subtask.setId(id);
+            subtasks.put(id, subtask);
+            addTaskToPrioritizedTasks(subtask);
+            Epic epic = epics.get(subtask.getEpicId());
+            epic.addSubtasksId(id);
+            changeEpicStatus(epic);
+            changeEpicTime(epic);
+        }
     }
 
     @Override
-    public void updateTask(Task newTask) {
-        tasks.put(newTask.getId(), newTask);
+    public void updateTask(int id, Task newTask) {
+        tasks.put(id, newTask);
         addTaskToPrioritizedTasks(newTask);
     }
 
     @Override
-    public void updateEpic(Epic newEpic) {
-        epics.put(newEpic.getId(), newEpic);
+    public void updateEpic(int id, Epic newEpic) {
+        epics.put(id, newEpic);
     }
 
     @Override
-    public void updateSubtask(Subtask newSubtask) {
-        subtasks.put(newSubtask.getId(), newSubtask);
+    public void updateSubtask(int id, Subtask newSubtask) {
+        subtasks.put(id, newSubtask);
         changeEpicStatus(epics.get(newSubtask.getEpicId()));
         changeEpicTime(epics.get(newSubtask.getEpicId()));
         addTaskToPrioritizedTasks(newSubtask);

@@ -32,11 +32,11 @@ public interface TaskManager {
 
     void addSubtask(Subtask subtask);
 
-    void updateTask(Task newTask);
+    void updateTask(int id, Task newTask);
 
-    void updateEpic(Epic newEpic);
+    void updateEpic(int id, Epic newEpic);
 
-    void updateSubtask(Subtask newSubtask);
+    void updateSubtask(int id, Subtask newSubtask);
 
     void deleteTaskById(Integer id);
 

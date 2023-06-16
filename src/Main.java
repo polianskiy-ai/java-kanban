@@ -16,9 +16,9 @@ public class Main {
         //создаем задачи:
         manager. addTask(task1);
         manager.addEpic(epic1);
-        manager.addSubtask(subtask1);
-        manager.addSubtask(subtask2);
-        manager.addSubtask(subtask3);
+        //manager.addSubtask(subtask1);
+        //manager.addSubtask(subtask2);
+        //manager.addSubtask(subtask3);
         manager.addEpic(epic2);
 
         //распечатываем:
