@@ -6,11 +6,10 @@ import java.io.*;
 import java.time.LocalDateTime;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private final String fileName;
+    private final String fileName = "src/resources/TaskHistory.csv";
 
-    public FileBackedTasksManager(HistoryManager historyManager) throws IOException {
-        fileName="src/resources/TaskHistory.csv";
-        load();
+    public FileBackedTasksManager(HistoryManager historyManager){
+        super(historyManager);
     }
 
     public void load() throws IOException {
@@ -19,7 +18,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         String line = "";
 
         while (br.ready()) {
-            line =  line + br.readLine()+"\n";
+            line = line + br.readLine() + "\n";
         }
         br.close();
 
@@ -80,10 +79,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    public static String historyToString(HistoryManager manager){
-        String historyId="";
+    public static String historyToString(HistoryManager manager) {
+        String historyId = "";
         for (Task task : manager.getHistory()) {
-            historyId+=task.getId()+",";
+            historyId += task.getId() + ",";
         }
         return historyId;
     }

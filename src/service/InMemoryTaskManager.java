@@ -1,5 +1,6 @@
 package service;
 
+import com.google.gson.Gson;
 import model.Epic;
 import model.Subtask;
 import model.Task;
@@ -9,11 +10,12 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
+    Gson gson = new Gson();
 
-    protected final Map<Integer, Task> tasks = new HashMap<>();
-    protected final Map<Integer, Epic> epics = new HashMap<>();
-    protected final Map<Integer, Subtask> subtasks = new HashMap<>();
-    protected final HistoryManager historyManager = Manager.getDefaultHistory();
+    protected Map<Integer, Task> tasks;
+    protected Map<Integer, Epic> epics;
+    protected Map<Integer, Subtask> subtasks;
+    protected final HistoryManager historyManager;
     private final Comparator<Task> comparator = (o1, o2) -> {
         if (o1.equals(o2)) {
             return 0;
@@ -26,7 +28,28 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected Set<Task> priorityTasks = new TreeSet<>(comparator);
 
-    private int newId = 0;
+    protected int newId = 0;
+
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        tasks = new HashMap<>();
+        epics = new HashMap<>();
+        subtasks = new HashMap<>();
+        this.historyManager = historyManager;
+
+    }
+
+    protected void setTasksById(HashMap<Integer, Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    protected void setEpicsById(HashMap<Integer, Epic> epics) {
+        this.epics = epics;
+    }
+
+    protected void setSubtasksById(HashMap<Integer, Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
 
     public List<Task> getHistory() {
         return historyManager.getHistory();
@@ -259,10 +282,10 @@ public class InMemoryTaskManager implements TaskManager {
             if (!task.equals(taskItem)) {
                 if (task.getStartTime() != null && taskItem.getEndTime() != null) {
                     if (task.getEndTime().isBefore(taskItem.getStartTime())
-                            && task.getEndTime().isBefore(taskItem.getStartTime())) {
+                            || task.getEndTime().isBefore(taskItem.getStartTime())) {
                         isNotIntersection = true;
                     } else if (task.getStartTime().isAfter(taskItem.getEndTime())
-                            && task.getEndTime().isAfter(taskItem.getEndTime())) {
+                            || task.getEndTime().isAfter(taskItem.getEndTime())) {
                         isNotIntersection = true;
                     } else {
                         isNotIntersection = false;

@@ -15,7 +15,7 @@ class TaskManagerTest{
     Task task = new Task(TaskType.TASK, "Task", "blabla");
     Epic epic = new Epic(TaskType.EPIC, "Epic", "bla bla");
     Subtask subtask = new Subtask(TaskType.SUBTASK, "Subtask", "bla", TaskStatus.NEW, 2,
-            35, LocalDateTime.now());
+            35, LocalDateTime.of(2021, 1, 1, 1, 1));
 
     @BeforeEach
     void addAllTasksForTest() {
