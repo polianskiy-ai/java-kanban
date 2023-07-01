@@ -9,7 +9,8 @@ public enum Endpoint {
     PRIORITY("/tasks");
 
 
-    private  String link;
+    private String link;
+
     private Endpoint(String link) {
         this.link = link;
     }

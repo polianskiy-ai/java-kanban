@@ -11,28 +11,24 @@ public class KVTaskClient {
     private String apiToken;
 
     public KVTaskClient() {
-        this.urlServer = "http://localhost:"+KVServer.PORT;
+        this.urlServer = "http://localhost:" + KVServer.PORT;
         apiToken = getApiToken();
 
     }
 
     private String getApiToken() {
-        URI uriRegister = URI.create(urlServer+"/register");
+        URI uriRegister = URI.create(urlServer + "/register");
 
-        // создаём объект, описывающий HTTP-запрос
-        HttpRequest request = HttpRequest.newBuilder() // получаем экземпляр билдера
-                .GET()    // указываем HTTP-метод запроса-
-                .uri(uriRegister) // указываем адрес ресурса
-                .header("Content-Type", "application/json") // указываем заголовок Accept
-                .build(); // заканчиваем настройку и создаём ("строим") http-запрос
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(uriRegister)
+                .header("Content-Type", "application/json")
+                .build();
 
-        // HTTP-клиент с настройками по умолчанию
         HttpClient client = HttpClient.newHttpClient();
 
-        // получаем стандартный обработчик тела запроса с конвертацией содержимого в строку
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
 
-        // отправляем запрос и получаем ответ от сервера
         HttpResponse<String> response = null;
         try {
             response = client.send(request, handler);
@@ -41,28 +37,22 @@ public class KVTaskClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Присваиваем содержимое тела ответа переменной apiToken и возвращаем её
         return apiToken = response.body();
     }
 
-    public void put (String key, String json) {
-        //POST /save/<ключ>?API_TOKEN=
-        URI uriSave = URI.create(urlServer+"/save"+key+"?API_TOKEN="+apiToken);
+    public void put(String key, String json) {
+        URI uriSave = URI.create(urlServer + "/save" + key + "?API_TOKEN=" + apiToken);
 
-        // создаём объект, описывающий HTTP-запрос
-        HttpRequest request = HttpRequest.newBuilder() // получаем экземпляр билдера
-                .POST(HttpRequest.BodyPublishers.ofString(json))    // указываем HTTP-метод запроса-
-                .uri(uriSave) // указываем адрес ресурса
-                .header("Content-Type", "application/json") // указываем заголовок Accept
-                .build(); // заканчиваем настройку и создаём ("строим") http-запрос
+        HttpRequest request = HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .uri(uriSave)
+                .header("Content-Type", "application/json")
+                .build();
 
-        // HTTP-клиент с настройками по умолчанию
         HttpClient client = HttpClient.newHttpClient();
 
-        // получаем стандартный обработчик тела запроса с конвертацией содержимого в строку
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
 
-        // отправляем запрос и получаем ответ от сервера
         HttpResponse<String> response = null;
         try {
             response = client.send(request, handler);
@@ -73,24 +63,19 @@ public class KVTaskClient {
         }
     }
 
-    public String load (String key) {
-        //GET /load/<ключ>?API_TOKEN=
-        URI uriLoad = URI.create(urlServer+"/load"+key+"?API_TOKEN="+apiToken);
+    public String load(String key) {
+        URI uriLoad = URI.create(urlServer + "/load" + key + "?API_TOKEN=" + apiToken);
 
-        // создаём объект, описывающий HTTP-запрос
-        HttpRequest request = HttpRequest.newBuilder() // получаем экземпляр билдера
-                .GET()    // указываем HTTP-метод запроса-
-                .uri(uriLoad) // указываем адрес ресурса
-                .header("Content-Type", "application/json") // указываем заголовок Accept
-                .build(); // заканчиваем настройку и создаём ("строим") http-запрос
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(uriLoad)
+                .header("Content-Type", "application/json")
+                .build();
 
-        // HTTP-клиент с настройками по умолчанию
         HttpClient client = HttpClient.newHttpClient();
 
-        // получаем стандартный обработчик тела запроса с конвертацией содержимого в строку
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
 
-        // отправляем запрос и получаем ответ от сервера
         HttpResponse<String> response = null;
         try {
             response = client.send(request, handler);
@@ -99,7 +84,6 @@ public class KVTaskClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // возвращаем ответ
         return response.body();
     }
 }

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-class TaskManagerTest{
+
+class TaskManagerTest {
     TaskManager tm = Manager.getDefault();
 
     Task task = new Task(TaskType.TASK, "Task", "blabla");
@@ -23,6 +24,7 @@ class TaskManagerTest{
         tm.addEpic(this.epic);
         tm.addSubtask(this.subtask);
     }
+
     @Test
     void testGetTasks() {
         List<Task> task = new ArrayList<>();

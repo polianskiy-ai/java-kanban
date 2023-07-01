@@ -43,9 +43,9 @@ public class HttpTaskServer {
     private void tasksProcessor(HttpExchange h) throws IOException {
         String method = h.getRequestMethod();
         String query = h.getRequestURI().getQuery();
-        switch (method){
+        switch (method) {
             case "GET":
-                if(query==null) {
+                if (query == null) {
                     List<Task> taskList = taskManager.getTasks();
                     if (taskList != null) {
                         String responseBody = gson.toJson(taskList);
@@ -59,11 +59,11 @@ public class HttpTaskServer {
                 }
 
                 assert query != null;
-                if(query.startsWith("id=")){
+                if (query.startsWith("id=")) {
                     String[] strings = query.split("&")[0].split("=");
                     int id = Integer.parseInt(strings[1]);
                     Task task = taskManager.getTaskById(id);
-                    if (task!=null){
+                    if (task != null) {
                         String responseBody = gson.toJson(task);
                         h.sendResponseHeaders(200, 0);
                         try (OutputStream os = h.getResponseBody()) {
@@ -72,9 +72,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(204, 0);
                     }
-                }
-
-                else{
+                } else {
                     h.sendResponseHeaders(404, 0);
                 }
                 h.close();
@@ -88,12 +86,11 @@ public class HttpTaskServer {
                     System.out.println("Попытка добавления");
                     taskManager.addTask(taskFromJson);
                     h.sendResponseHeaders(201, 0);
-                    String responseBody = "ID созданной задачи "+ taskFromJson.getId();
+                    String responseBody = "ID созданной задачи " + taskFromJson.getId();
                     try (OutputStream os = h.getResponseBody()) {
                         os.write(responseBody.getBytes(StandardCharsets.UTF_8));
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(422, 0);
                     String responseBody = "Введен некорректный формат задачи";
                     try (OutputStream os = h.getResponseBody()) {
@@ -123,8 +120,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(404, 0);
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(400, 0);
                 }
 
@@ -141,9 +137,9 @@ public class HttpTaskServer {
     private void epicProcessor(HttpExchange h) throws IOException {
         String method = h.getRequestMethod();
         String query = h.getRequestURI().getQuery();
-        switch (method){
+        switch (method) {
             case "GET":
-                if(query==null) {
+                if (query == null) {
                     List<Epic> epicList = taskManager.getEpics();
                     if (epicList != null) {
                         String responseBody = gson.toJson(epicList);
@@ -157,11 +153,11 @@ public class HttpTaskServer {
                 }
 
                 assert query != null;
-                if(query.startsWith("id=")){
+                if (query.startsWith("id=")) {
                     String[] strings = query.split("&")[0].split("=");
                     int id = Integer.parseInt(strings[1]);
                     Epic epic = taskManager.getEpicById(id);
-                    if (epic!=null){
+                    if (epic != null) {
                         String responseBody = gson.toJson(epic);
                         h.sendResponseHeaders(200, 0);
                         try (OutputStream os = h.getResponseBody()) {
@@ -170,8 +166,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(204, 0);
                     }
-                }
-                else{
+                } else {
                     h.sendResponseHeaders(404, 0);
                 }
                 h.close();
@@ -184,12 +179,11 @@ public class HttpTaskServer {
                 if (epicFromJson != null) {
                     taskManager.addEpic(epicFromJson);
                     h.sendResponseHeaders(201, 0);
-                    String responseBody = "ID созданной задачи "+ epicFromJson.getId();
+                    String responseBody = "ID созданной задачи " + epicFromJson.getId();
                     try (OutputStream os = h.getResponseBody()) {
                         os.write(responseBody.getBytes(StandardCharsets.UTF_8));
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(422, 0);
                     String responseBody = "Введен некорректный формат задачи";
                     try (OutputStream os = h.getResponseBody()) {
@@ -219,8 +213,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(404, 0);
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(400, 0);
                 }
                 h.close();
@@ -236,9 +229,9 @@ public class HttpTaskServer {
     private void subtaskProcessor(HttpExchange h) throws IOException {
         String method = h.getRequestMethod();
         String query = h.getRequestURI().getQuery();
-        switch (method){
+        switch (method) {
             case "GET":
-                if(query==null) {
+                if (query == null) {
                     List<Subtask> subtaskList = taskManager.getSubtasks();
                     if (subtaskList != null) {
                         String responseBody = gson.toJson(subtaskList);
@@ -252,11 +245,11 @@ public class HttpTaskServer {
                 }
 
                 assert query != null;
-                if(query.startsWith("id=")){
+                if (query.startsWith("id=")) {
                     String[] strings = query.split("&")[0].split("=");
                     int id = Integer.parseInt(strings[1]);
                     Subtask subtask = taskManager.getSubtaskById(id);
-                    if (subtask!=null){
+                    if (subtask != null) {
                         String responseBody = gson.toJson(subtask);
                         h.sendResponseHeaders(200, 0);
                         try (OutputStream os = h.getResponseBody()) {
@@ -265,8 +258,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(204, 0);
                     }
-                }
-                else{
+                } else {
                     h.sendResponseHeaders(404, 0);
                 }
                 h.close();
@@ -282,12 +274,11 @@ public class HttpTaskServer {
                 if (subtaskFromJson != null) {
                     taskManager.addSubtask(subtaskFromJson);
                     h.sendResponseHeaders(201, 0);
-                    String responseBody = "ID созданной задачи "+ subtaskFromJson.getId();
+                    String responseBody = "ID созданной задачи " + subtaskFromJson.getId();
                     try (OutputStream os = h.getResponseBody()) {
                         os.write(responseBody.getBytes(StandardCharsets.UTF_8));
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(422, 0);
                     String responseBody = "Введен некорректный формат задачи";
                     try (OutputStream os = h.getResponseBody()) {
@@ -317,8 +308,7 @@ public class HttpTaskServer {
                     } else {
                         h.sendResponseHeaders(404, 0);
                     }
-                }
-                else {
+                } else {
                     h.sendResponseHeaders(400, 0);
                 }
                 h.close();
@@ -404,7 +394,7 @@ public class HttpTaskServer {
         h.close();
     }
 
-    public void stop(){
+    public void stop() {
         server.stop(1);
     }
 }

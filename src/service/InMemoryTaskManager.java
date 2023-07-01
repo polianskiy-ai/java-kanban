@@ -265,17 +265,17 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    private void addTaskToPrioritizedTasks(Task task){
+    private void addTaskToPrioritizedTasks(Task task) {
         if (validateTasks(task)) {
             priorityTasks.add(task);
         } else throw new ManagerSaveException("Задача пересекается с другой задачей");
     }
 
-    public List<Task> getPrioritizedTasks(){
+    public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(priorityTasks);
     }
 
-    private boolean validateTasks(Task task){
+    private boolean validateTasks(Task task) {
         List<Task> list = getPrioritizedTasks();
         boolean isNotIntersection = true;
         for (Task taskItem : list) {
@@ -293,6 +293,7 @@ public class InMemoryTaskManager implements TaskManager {
                     }
                 }
             }
-        }   return isNotIntersection;
+        }
+        return isNotIntersection;
     }
 }

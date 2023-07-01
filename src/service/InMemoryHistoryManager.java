@@ -1,4 +1,5 @@
 package service;
+
 import model.Task;
 
 import java.util.*;
@@ -29,16 +30,16 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void linkLast(Task task) {
-            Node node = new Node(task);
-            if (size == 0) {
-                head = node;
-            } else {
-                tail.next = node;
-                node.prev = tail;
-            }
-            tail = node;
-            size++;
-            nodes.put(task.getId(), node);
+        Node node = new Node(task);
+        if (size == 0) {
+            head = node;
+        } else {
+            tail.next = node;
+            node.prev = tail;
+        }
+        tail = node;
+        size++;
+        nodes.put(task.getId(), node);
     }
 
     private void removeNode(Node node) {
